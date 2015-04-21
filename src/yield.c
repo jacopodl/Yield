@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 				exit(0);
 				break;
 			case 2:
-				printf("%s V: %s", BASENAME, VERSION);
+				printf("%s V: %s\n", BASENAME, VERSION);
 				exit(0);
 				break;
 			}
