@@ -38,6 +38,7 @@ typedef struct target_info
 	char *procName;
 	int priority;
 	bool setMode;
+	bool tSet;
 }target_info;
 
 void show_help();
@@ -53,7 +54,7 @@ int main(int argc, char **argv)
 		exit(0);
 	}
 
-	target_info target = { 0, NULL, 0, false };
+	target_info target = { 0, NULL, 0, false, false };
 	ax_lopt lopt[] = { { "set", ARGSX_REQ_ARG, 's' }, { "help", ARGSX_NOARG, '\0' }, { "version", ARGSX_NOARG, '\0' } };
 	
 	int rchr;
@@ -103,8 +104,15 @@ int main(int argc, char **argv)
 		case ARGSX_NONOPT:
 			if ((target.pid = (int)strtol(ax_arg, NULL, 10)) == 0)
 				target.procName = ax_arg;
+			target.tSet=true;
 			break;
 		}
+	}
+
+	if(!target.tSet)
+	{
+		printf("Process name or PID missing!\n");
+		exit(-1);
 	}
 
 	if (get_process_info(&target)==false)
